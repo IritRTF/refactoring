@@ -1,21 +1,17 @@
-
-
 from PIL import Image
 import numpy as np
 
 img = Image.open("img2.jpg")
 arr = np.array(img)
-a = len(arr)
-a1 = len(arr[1])
-i = 0
-while i < a - 11:
-    j = 0
-    while j < a1 - 11:
-        s = np.sum(arr[i:i+10, j:j+10][0:2])
-        s = int(s // 100)
 
+i = 0
+while i < len(arr):
+    j = 0
+    while j < len(arr[0]):
+        s = np.mean(arr[i:i+10, j:j+10][:])
         arr[i:i+10, j:j+10][:] = int(s // 50) * 50
-        j = j + 10
-    i = i + 10
+        j += 10
+    i += 10
+
 res = Image.fromarray(arr)
 res.save('res.jpg')
