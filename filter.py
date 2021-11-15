@@ -13,6 +13,9 @@ def input_image():
 def input_parametrs():
     print('Введите размер мозаики')
     size = int(input())
+    while not size>0:
+        print('Размер должен быть > 0. Повторите ввод')
+        size = int(input())
     print('Введите количество уровней градации ')
     step = int(255 // int(input()))
     return size, step
