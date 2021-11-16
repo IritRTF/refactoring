@@ -11,10 +11,10 @@ while i <= a - 10:
         s = 0
         for n in range(i, i + 10):
             for n1 in range(j, j + 10):
-                n1 = arr[n][n1][0]
-                n2 = arr[n][n1][1]
-                n3 = arr[n][n1][2]
-                M = (int(n1) + int(n2) + int(n3))/3
+                r = arr[n][n1][0]
+                g = arr[n][n1][1]
+                b = arr[n][n1][2]
+                M = (int(r) + int(g) + int(b))/3
                 s += M
         c = int(s // 100)
         for n in range(i, i + 10):
