@@ -15,10 +15,13 @@ def transform_to_mosaic(arr, p_w, p_h, gr):
             arr[i: i + p_h, j: j + p_w] = np.full(3, brightness)
 
 
-img = Image.open("img2.jpg")
+file_name = input("Введите имя файла который хотите преобразовать в мозаику:")
+res_name = input("Введите имя файла в который будет записан результат преобразования:")
+dimensions = [int(i) for i in input("Введите через запятую ширину и высоту одного элемента мозаики:").split(',')]
+gray_gradation = int(input("Введите число градаций серого:"))
+img = Image.open(file_name)
 img_arr = np.array(img)
-pixel_height, pixel_width = 15, 15
-gray_gradation = 10
-transform_to_mosaic(img_arr, pixel_width, pixel_height, gray_gradation)
+transform_to_mosaic(img_arr, dimensions[0], dimensions[1], gray_gradation)
 res = Image.fromarray(img_arr)
+print("Преобразование завершено... Результат записан в файл \"" + res_name + "\"")
 res.save('res.jpg')
