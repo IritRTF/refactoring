@@ -8,7 +8,10 @@ def transform_to_mosaic(x, y, arr, size, step):
     average_brightness = np.mean(arr[x:x+size, y:y+size][:])
     arr[x:x+size, y:y+size][:] = int(average_brightness // step) * step
 
-img = Image.open("img2.jpg")
+open_name = input('Введите назвние изображения : ')
+save_name = input('Введите назвние выходного изображения : ')
+
+img = Image.open(open_name)
 arr = np.array(img)
 
 size = int(input('Введите длину боковой стороны мозайки (например: 10 (x*x)) : '))
@@ -22,4 +25,4 @@ for x in range(0, width - size + 1, size):
     for y in range(0, height - size + 1, size):
         transform_to_mosaic(x, y, arr, size, step)
 res = Image.fromarray(arr)
-res.save('res.jpg')
+res.save(save_name)
