@@ -32,7 +32,6 @@ window_height = 0
 while window_height < height:
     window_width = 0
     while window_width < width:
-        color_pixel = get_average_window_color(arr, window_height, window_width, filter_frequency)
         replacement_pixels(arr,
                            window_height,
                            window_width,
