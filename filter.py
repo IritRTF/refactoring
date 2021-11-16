@@ -25,8 +25,6 @@ def replacement_pixels(arr, window_height, window_width, grayscale):
 
 img = Image.open("img2.jpg")
 arr = np.array(img)
-height = len(arr)
-width = len(arr[1])
 window_height = 5
 window_width = 5
 grayscale = 10
