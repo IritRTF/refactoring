@@ -1,28 +1,25 @@
 from PIL import Image
 import numpy as np
-img = Image.open("img2.jpg")
-arr = np.array(img)
-a = len(arr)
-a1 = len(arr[1])
-i = 0
-while i < a - 11:
-    j = 0
-    while j < a1 - 11:
-        s = 0
-        for n in range(i, i + 10):
-            for n1 in range(j, j + 10):
-                n1 = arr[n][n1][0]
-                n2 = arr[n][n1][1]
-                n3 = arr[n][n1][2]
-                M = n1 + n2 + n3
-                s += M
-        s = int(s // 100)
-        for n in range(i, i + 10):
-            for n1 in range(j, j + 10):
-                arr[n][n1][0] = int(s // 50) * 50
-                arr[n][n1][1] = int(s // 50) * 50
-                arr[n][n1][2] = int(s // 50) * 50
-        j = j + 10
-    i = i + 10
-res = Image.fromarray(arr)
-res.save('res.jpg')
+
+
+def write_pixel(x, y, arr, pixel_size, color_step):
+    grey_average = np.mean(arr[x:x+pixel_size, y:y+pixel_size][:])
+    color = int(grey_average // color_step) * color_step
+    arr[x:x+pixel_size,y:y+pixel_size][:] = color
+
+def main():
+    name_in_file, name_out_file = input().split(' ')
+    img = Image.open(name_in_file)
+    arr = np.array(img)
+    img_width = len(arr)
+    img_height = len(arr[0])
+    gradations = 5
+    color_step = 255 // gradations
+    pixel_size = 10
+    for x in range(0, img_width - pixel_size + 1, pixel_size):
+        for y in range(0, img_height - pixel_size + 1, pixel_size):
+            write_pixel(x, y, arr, pixel_size, color_step)
+    res = Image.fromarray(arr)
+    res.save(name_out_file)
+
+main()
