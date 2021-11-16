@@ -1,28 +1,42 @@
 from PIL import Image
 import numpy as np
+
+
+def calc_grey_average(x_idx, x_length, y_idx, y_length, array):
+    total = 0
+    for x in range(x_idx, x_idx + x_length):
+        for y in range(y_idx, y_idx + y_length):
+            red = array[x][y][0]
+            green = array[x][y][1]
+            blue = array[x][y][2]
+            mean = (int(red) + int(green) + int(blue)) / 3
+            total += mean
+    return int(total // (x_length * y_length))
+
+
+def write_pixels(x_idx, y_idx, out_arr, pixel_size, color_step, grey_average):
+    color = int(grey_average // color_step) * color_step
+    for x in range(x_idx, x_idx + pixel_size):
+        for y in range(y_idx, y_idx + pixel_size):
+            out_arr[x][y][0] = color
+            out_arr[x][y][1] = color
+            out_arr[x][y][2] = color
+
+
 img = Image.open("img2.jpg")
 arr = np.array(img)
-a = len(arr)
-a1 = len(arr[1])
-i = 0
-while i <= a - 10:
-    j = 0
-    while j <= a1 - 10:
-        s = 0
-        for n in range(i, i + 10):
-            for n1 in range(j, j + 10):
-                r = arr[n][n1][0]
-                g = arr[n][n1][1]
-                b = arr[n][n1][2]
-                M = (int(r) + int(g) + int(b))/3
-                s += M
-        c = int(s // 100)
-        for n in range(i, i + 10):
-            for n1 in range(j, j + 10):
-                arr[n][n1][0] = int(c // 50) * 50
-                arr[n][n1][1] = int(c // 50) * 50
-                arr[n][n1][2] = int(c // 50) * 50
-        j = j + 10
-    i = i + 10
+gradations = 5
+color_step = 255 // gradations
+pixel_size = 10
+img_width = len(arr)
+img_height = len(arr[1])
+for x in range(0, img_width - pixel_size + 1, pixel_size):
+    for y in range(0, img_height - pixel_size + 1, pixel_size):
+        write_pixels(x,
+                     y,
+                     arr,
+                     pixel_size,
+                     color_step,
+                     calc_grey_average(x, pixel_size, y, pixel_size, arr))
 res = Image.fromarray(arr)
 res.save('res.jpg')
