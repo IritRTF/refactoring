@@ -8,7 +8,8 @@ def write_pixel(x, y, arr, pixel_size, color_step):
     arr[x:x+pixel_size,y:y+pixel_size][:] = color
 
 def main():
-    img = Image.open("img2.jpg")
+    name_in_file, name_out_file = input().split(' ')
+    img = Image.open(name_in_file)
     arr = np.array(img)
     img_width = len(arr)
     img_height = len(arr[0])
@@ -19,6 +20,6 @@ def main():
         for y in range(0, img_height - pixel_size + 1, pixel_size):
             write_pixel(x, y, arr, pixel_size, color_step)
     res = Image.fromarray(arr)
-    res.save('res.jpg')
+    res.save(name_out_file)
 
 main()
