@@ -1,28 +1,28 @@
 from PIL import Image
 import numpy as np
-img = Image.open("img2.jpg")
+
+np.seterr(over='ignore')
+
+
+def transform_to_mosaic(x, y, arr, size, step):
+    average_brightness = np.mean(arr[x:x+size, y:y+size][:])
+    arr[x:x+size, y:y+size][:] = int(average_brightness // step) * step
+
+open_name = input('Введите назвние изображения : ')
+save_name = input('Введите назвние выходного изображения : ')
+
+img = Image.open(open_name)
 arr = np.array(img)
-a = len(arr)
-a1 = len(arr[1])
-i = 0
-while i < a - 11:
-    j = 0
-    while j < a1 - 11:
-        s = 0
-        for n in range(i, i + 10):
-            for n1 in range(j, j + 10):
-                n1 = arr[n][n1][0]
-                n2 = arr[n][n1][1]
-                n3 = arr[n][n1][2]
-                M = n1 + n2 + n3
-                s += M
-        s = int(s // 100)
-        for n in range(i, i + 10):
-            for n1 in range(j, j + 10):
-                arr[n][n1][0] = int(s // 50) * 50
-                arr[n][n1][1] = int(s // 50) * 50
-                arr[n][n1][2] = int(s // 50) * 50
-        j = j + 10
-    i = i + 10
+
+size = int(input('Введите длину боковой стороны мозайки (например: 10 (x*x)) : '))
+gradation = int(input('Введите градацию серого (например: 5) : '))
+step = 255 // gradation
+
+width = len(arr)
+height = len(arr[1])
+
+for x in range(0, width - size + 1, size):
+    for y in range(0, height - size + 1, size):
+        transform_to_mosaic(x, y, arr, size, step)
 res = Image.fromarray(arr)
-res.save('res.jpg')
+res.save(save_name)
