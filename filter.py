@@ -1,28 +1,21 @@
+import sys
 from PIL import Image
 import numpy as np
-img = Image.open("img2.jpg")
-arr = np.array(img)
-a = len(arr)
-a1 = len(arr[1])
-i = 0
-while i < a - 11:
-    j = 0
-    while j < a1 - 11:
-        s = 0
-        for n in range(i, i + 10):
-            for n1 in range(j, j + 10):
-                n1 = arr[n][n1][0]
-                n2 = arr[n][n1][1]
-                n3 = arr[n][n1][2]
-                M = n1 + n2 + n3
-                s += M
-        s = int(s // 100)
-        for n in range(i, i + 10):
-            for n1 in range(j, j + 10):
-                arr[n][n1][0] = int(s // 50) * 50
-                arr[n][n1][1] = int(s // 50) * 50
-                arr[n][n1][2] = int(s // 50) * 50
-        j = j + 10
-    i = i + 10
-res = Image.fromarray(arr)
-res.save('res.jpg')
+
+
+def median_gray(arr, grad_step):
+    return int(np.sum(arr) // (len(arr) ** 2 * 3 * grad_step)) * grad_step
+
+
+def gray_pixelation(image, pixel_size, gradations_count):
+    grad_step = int(255 // (gradations_count - 1))
+    arr = np.array(image)
+    for i in range(0, len(arr) - pixel_size + 1, pixel_size):
+        for j in range(0, len(arr[1]) - pixel_size + 1, pixel_size):
+            res_color = median_gray(arr[i:i + pixel_size, j:j + pixel_size, 0:3], grad_step)
+            arr[i:i + pixel_size, j:j + pixel_size, 0:3] = res_color
+    return Image.fromarray(arr)
+
+
+if __name__ == "__main__":
+    gray_pixelation(Image.open(sys.argv[1]), 10, 5).save(sys.argv[2])
