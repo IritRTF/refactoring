@@ -3,17 +3,17 @@ from PIL import Image
 import numpy as np
 
 
-def median_gray(arr, grad_step):
-    return int(np.sum(arr) // (len(arr) ** 2 * 3 * grad_step)) * grad_step
+def median_gray(arr, step):
+    return int(np.mean(arr) // step) * step
 
 
-def gray_pixelation(image, pixel_size, gradations_count):
-    grad_step = int(255 // (gradations_count - 1))
+def gray_pixelation(image, size, gradations):
+    step = int(255 // (gradations - 1))
     arr = np.array(image)
-    for i in range(0, len(arr) - pixel_size + 1, pixel_size):
-        for j in range(0, len(arr[1]) - pixel_size + 1, pixel_size):
-            res_color = median_gray(arr[i:i + pixel_size, j:j + pixel_size, 0:3], grad_step)
-            arr[i:i + pixel_size, j:j + pixel_size, 0:3] = res_color
+    for row in range(0, len(arr) - size + 1, size):
+        for column in range(0, len(arr[1]) - size + 1, size):
+            arr[row:row + size, column:column + size] = \
+                median_gray(arr[row:row + size, column:column + size], step)
     return Image.fromarray(arr)
 
 
