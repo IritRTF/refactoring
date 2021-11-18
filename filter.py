@@ -1,28 +1,25 @@
 from PIL import Image
 import numpy as np
-img = Image.open("img2.jpg")
+
+
+def get_average_window_color(arr, height, width, window_height, window_width):
+    return np.sum(arr[height: height + window_height,
+                        width: width + window_width]) // (window_height * window_width * 3)
+
+
+def replacement_pixels(arr, window_height, window_width, grayscale):
+    for h in range(0, len(arr), window_height):
+        for w in range(0, len(arr[1]), window_width):
+            color = get_average_window_color(arr, h, w, window_height, window_width)
+            color = int(color // grayscale) * grayscale
+            arr[h: h + window_height, w: w + window_width] = np.full(3, color)
+
+img = Image.open(input("введите название файла "))
 arr = np.array(img)
-a = len(arr)
-a1 = len(arr[1])
-i = 0
-while i < a - 11:
-    j = 0
-    while j < a1 - 11:
-        s = 0
-        for n in range(i, i + 10):
-            for n1 in range(j, j + 10):
-                n1 = arr[n][n1][0]
-                n2 = arr[n][n1][1]
-                n3 = arr[n][n1][2]
-                M = n1 + n2 + n3
-                s += M
-        s = int(s // 100)
-        for n in range(i, i + 10):
-            for n1 in range(j, j + 10):
-                arr[n][n1][0] = int(s // 50) * 50
-                arr[n][n1][1] = int(s // 50) * 50
-                arr[n][n1][2] = int(s // 50) * 50
-        j = j + 10
-    i = i + 10
+window_height = int(input("введите высоту мозаики или будет использовано значение по умолчанию ") or "10")
+window_width = int(input("введите ширину мозаики или будет использовано значение по умолчанию ") or "10")
+grayscale = int(input("введите градацию серого или будет использовано значение по умолчанию ") or "50")
+replacement_pixels(arr, window_height, window_width, grayscale)
 res = Image.fromarray(arr)
+print("complete")
 res.save('res.jpg')
