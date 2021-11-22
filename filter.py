@@ -21,8 +21,6 @@ mosaic_size = int(input("Введите размер мозаики: "))
 grey = int(input("Введите количество градаций серого: "))
 
 img_code = np.array(source_img)
-count_x = len(img_code)
-count_y = len(img_code[1])
 grey_size = 255 // grey
 
 res = Image.fromarray(do_mosaic(img_code, mosaic_size, grey_size))
