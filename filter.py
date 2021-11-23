@@ -23,16 +23,7 @@ i = 0
 while i < width - SIZE - 1:
     j = 0
     while j < height - SIZE - 1:
-        shade = 0
-        """for x_axis in range(i, i + SIZE):
-            for y_axis in range(j, j + SIZE):
-                red = arr[x_axis][y_axis][0]
-                green = arr[x_axis][y_axis][1]
-                blue = arr[x_axis][y_axis][2]
-                col_pix = (int(red) + int(green) + int(blue))
-                shade += col_pix"""
-        shade = get_color(i, j, SIZE, arr)
-        shade = int(shade / 3 // SIZE ** 2)
+        shade = int(get_color(i, j, SIZE, arr) / 3 // SIZE ** 2)
         for x_axis in range(i, i + SIZE):
             for y_axis in range(j, j + SIZE):
                 arr[x_axis][y_axis][0] = int(s // STEPS) * STEPS
