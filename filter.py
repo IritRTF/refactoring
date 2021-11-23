@@ -5,14 +5,15 @@ def get_color (x, y, size_of_part, array):
     shade = 0
     for i in range(x, x + size_of_part):
         for j in range(y, y + size_of_part):
-            red = arr[i][j][0]
-            green = arr[i][j][1]
-            blue = arr[i][j][2]
+            red = array[i][j][0]
+            green = array[i][j][1]
+            blue = array[i][j][2]
             col_pix = (int(red) + int(green) + int(blue))
             shade += col_pix
             return shade
             
-
+#def redraw_mosaic(x, y, )
+            
 img = Image.open("img2.jpg")
 arr = np.array(img)
 STEPS = 50
