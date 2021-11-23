@@ -24,9 +24,9 @@ while i <= a - 10:
         s = int(s // 100)
         for n in range(i, i + 10):
             for y_axis in range(j, j + 10):
-                arr[x_axis][y_axis][0] = int(s // STEPS) * STEPS
-                arr[x_axis][y_axis][1] = int(s // STEPS) * STEPS
-                arr[x_axis][y_axis][2] = int(s // STEPS) * STEPS
+                arr[n][y_axis][0] = int(s // STEPS) * STEPS
+                arr[n][y_axis][1] = int(s // STEPS) * STEPS
+                arr[n][y_axis][2] = int(s // STEPS) * STEPS
         j = j + 10
     i = i + 10
 res = Image.fromarray(arr)
