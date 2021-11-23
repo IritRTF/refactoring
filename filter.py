@@ -22,7 +22,7 @@ while i <= a - 10:
                 M = (int(red) + int(green) + int(blue)) // 3
                 s += M
         s = int(s // 100)
-        for n in range(i, i + 10):
+        for x_axis in range(i, i + 10):
             for y_axis in range(j, j + 10):
                 arr[x_axis][y_axis][0] = int(s // STEPS) * STEPS
                 arr[x_axis][y_axis][1] = int(s // STEPS) * STEPS
