@@ -12,7 +12,8 @@ def get_color (x, y, size_of_part, array):
             shade += col_pix
             return shade
             
-#def redraw_mosaic(x, y, )
+"""def redraw_mosaic(x, y, STEPS, size_of_part, array):
+    shade = int(get_color(i, j, SIZE, arr) / 3 // SIZE ** 2)"""
             
 img = Image.open("img2.jpg")
 arr = np.array(img)
@@ -20,17 +21,13 @@ STEPS = 50
 SIZE = 10
 width = len(arr)
 height = len(arr[1])
-i = 0
-while i < width - SIZE - 1:
-    j = 0
-    while j < height - SIZE - 1:
+for i in range (0, width - SIZE + 1, SIZE):
+    for j in range (0, height - SIZE + 1, SIZE)
         shade = int(get_color(i, j, SIZE, arr) / 3 // SIZE ** 2)
         for x_axis in range(i, i + SIZE):
             for y_axis in range(j, j + SIZE):
-                arr[x_axis][y_axis][0] = int(s // STEPS) * STEPS
-                arr[x_axis][y_axis][1] = int(s // STEPS) * STEPS
-                arr[x_axis][y_axis][2] = int(s // STEPS) * STEPS
-        j = j + SIZE
-    i = i + SIZE
+                arr[x_axis][y_axis][0] = int(shade // STEPS) * STEPS
+                arr[x_axis][y_axis][1] = int(shade // STEPS) * STEPS
+                arr[x_axis][y_axis][2] = int(shade // STEPS) * STEPS
 res = Image.fromarray(arr)
 res.save('res.jpg')
