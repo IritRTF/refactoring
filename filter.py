@@ -35,8 +35,8 @@ def save_img(img: np.ndarray, filename: str):
 
 def convert(input_path: str, output_path: str = None, pixel_size: int = STANDARD_PIXEL_SIZE,
             grayscale: int = STANDARD_GRAYSCALE):
-    img = load_img_as_array(input_path)
-    gray_image = convert_to_gray_pixel_art(img, pixel_size, grayscale)
+    img = load_img(input_path)
+    gray_image = conv_to_gray_pixel_art(img, pixel_size, grayscale)
     file_info = os.path.splitext(input_path)
     output_path = output_path or f"{file_info[0]}_pixel{file_info[1]}"
     save_img(gray_image, output_path)
