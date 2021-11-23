@@ -1,28 +1,42 @@
 from PIL import Image
 import numpy as np
+
+def get_color (x, y, size_of_part, array):
+    shade = 0
+    for i in range(x, x + size_of_part):
+        for j in range(y, y + size_of_part):
+            red = arr[i][j][0]
+            green = arr[i][j][1]
+            blue = arr[i][j][2]
+            col_pix = (int(red) + int(green) + int(blue))
+            shade += col_pix
+
+
 img = Image.open("img2.jpg")
 arr = np.array(img)
+STEPS = 50
+SIZE = 10
 a = len(arr)
 a1 = len(arr[1])
 i = 0
-while i < a - 11:
+while i < a - SIZE - 1:
     j = 0
-    while j < a1 - 11:
-        s = 0
-        for n in range(i, i + 10):
-            for n1 in range(j, j + 10):
-                n1 = arr[n][n1][0]
-                n2 = arr[n][n1][1]
-                n3 = arr[n][n1][2]
-                M = n1 + n2 + n3
-                s += M
-        s = int(s // 100)
-        for n in range(i, i + 10):
-            for n1 in range(j, j + 10):
-                arr[n][n1][0] = int(s // 50) * 50
-                arr[n][n1][1] = int(s // 50) * 50
-                arr[n][n1][2] = int(s // 50) * 50
-        j = j + 10
-    i = i + 10
+    while j < a1 - SIZE - 1:
+        shade = 0
+        for x_axis in range(i, i + SIZE):
+            for y_axis in range(j, j + SIZE):
+                red = arr[x_axis][y_axis][0]
+                green = arr[x_axis][y_axis][1]
+                blue = arr[x_axis][y_axis][2]
+                col_pix = (int(red) + int(green) + int(blue))
+                shade += col_pix
+        shade = int(shade / 3 // SIZE ** 2)
+        for x_axis in range(i, i + SIZE):
+            for y_axis in range(j, j + SIZE):
+                arr[x_axis][y_axis][0] = int(s // STEPS) * STEPS
+                arr[x_axis][y_axis][1] = int(s // STEPS) * STEPS
+                arr[x_axis][y_axis][2] = int(s // STEPS) * STEPS
+        j = j + SIZE
+    i = i + SIZE
 res = Image.fromarray(arr)
 res.save('res.jpg')
