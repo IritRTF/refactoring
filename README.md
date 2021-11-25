@@ -1,7 +1,8 @@
 # Время выполнения filter.py
-![](C:/Users/ilyasychkov/Desktop/py1.png)
-# Время выполнения filter.py
-![](C:/Users/ilyasychkov/Desktop/py2.png)
-
+![](screenshots/py1.png)
+# Время выполнения old_filter.py
+![](screenshots/py2.png)
+# Время выполнения filter_with_filename.py
+![](screenshots/py3.png)
 ## Что делать?
 ### 1 этап
