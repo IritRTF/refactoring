@@ -1,30 +1,42 @@
 from PIL import Image
 import numpy as np
 
-img = Image.open("img2.jpg")
-arr = np.array(img)
-a = len(arr)
-a1 = len(arr[1])
-i = 0
 
-while i < a:
-    j = 0
-    while j < a1:
-        s = 0
-        for n in range(i, i + 10):
-            for m in range(j, j + 10):
-                n1 = arr[n][m][0] // 3
-                n2 = arr[n][m][1] // 3
-                n3 = arr[n][m][2] // 3
-                M = n1 + n2 + n3
-                s += M
-        s = int(s // 100)
-        for n in range(i, i + 10):
-            for m in range(j, j + 10):
-                arr[n][m][0] = int(s // 50) * 50
-                arr[n][m][1] = int(s // 50) * 50
-                arr[n][m][2] = int(s // 50) * 50
-        j = j + 10
-    i = i + 10
-res = Image.fromarray(arr)
-res.save('res.jpg')
+def get_average(arr, x, y, size):
+    sum = 0
+    for i in range(x, x + size):
+        for j in range(y, y + size):
+            r = arr[i][j][0] // 3
+            g = arr[i][j][1] // 3
+            b = arr[i][j][2] // 3
+            sum += r + g + b
+    return int(sum // (size * size))
+
+
+def replace_pixels(arr, x, y, size, value):
+    for n in range(x, x + size):
+        for m in range(y, y + size):
+            arr[n][m][0] = value
+            arr[n][m][1] = value
+            arr[n][m][2] = value
+
+
+def grayscale_image(arr, size, grayscale):
+    height = len(arr)
+    width = len(arr[1])
+
+    for i in range(0, height, size):
+        for j in range(0, width, size):
+            avg = get_average(arr, i, j, size)
+            replace_pixels(arr, i, j, size, int(avg // grayscale) * grayscale)
+
+
+if __name__ == "__main__":
+    arr = np.array(Image.open("img2.jpg"))
+    size = 10
+    grayscale = 50
+
+    grayscale_image(arr, size, grayscale)
+
+    res = Image.fromarray(arr)
+    res.save('res.jpg')
