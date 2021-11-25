@@ -1,28 +1,33 @@
 from PIL import Image
 import numpy as np
+
+def get_color (x, y, size_of_part, array):
+    shade = 0
+    for i in range(x, x + size_of_part):
+        for j in range(y, y + size_of_part):
+            red = array[i][j][0]
+            green = array[i][j][1]
+            blue = array[i][j][2]
+            col_pix = (int(red) + int(green) + int(blue))
+            shade += col_pix
+            return shade
+            
+"""def redraw_mosaic(x, y, STEPS, size_of_part, array):
+    shade = int(get_color(i, j, SIZE, arr) / 3 // SIZE ** 2)"""
+            
 img = Image.open("img2.jpg")
 arr = np.array(img)
-a = len(arr)
-a1 = len(arr[1])
-i = 0
-while i < a - 11:
-    j = 0
-    while j < a1 - 11:
-        s = 0
-        for n in range(i, i + 10):
-            for n1 in range(j, j + 10):
-                n1 = arr[n][n1][0]
-                n2 = arr[n][n1][1]
-                n3 = arr[n][n1][2]
-                M = n1 + n2 + n3
-                s += M
-        s = int(s // 100)
-        for n in range(i, i + 10):
-            for n1 in range(j, j + 10):
-                arr[n][n1][0] = int(s // 50) * 50
-                arr[n][n1][1] = int(s // 50) * 50
-                arr[n][n1][2] = int(s // 50) * 50
-        j = j + 10
-    i = i + 10
+STEPS = 50
+SIZE = 10
+width = len(arr)
+height = len(arr[1])
+for i in range (0, width - SIZE + 1, SIZE):
+    for j in range (0, height - SIZE + 1, SIZE)
+        shade = int(get_color(i, j, SIZE, arr) / 3 // SIZE ** 2)
+        for x_axis in range(i, i + SIZE):
+            for y_axis in range(j, j + SIZE):
+                arr[x_axis][y_axis][0] = int(shade // STEPS) * STEPS
+                arr[x_axis][y_axis][1] = int(shade // STEPS) * STEPS
+                arr[x_axis][y_axis][2] = int(shade // STEPS) * STEPS
 res = Image.fromarray(arr)
 res.save('res.jpg')
