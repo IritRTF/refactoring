@@ -32,11 +32,11 @@ def grayscale_image(arr, size, grayscale):
 
 
 if __name__ == "__main__":
-    arr = np.array(Image.open("img2.jpg"))
-    size = 10
-    grayscale = 50
+    arr = np.array(Image.open(input("Введите название файла: ")))
+    size = int(input("Введите размер мозаики"))
+    grayscale = int(input("Введите градацию серого для мозаики:"))
 
     grayscale_image(arr, size, grayscale)
 
     res = Image.fromarray(arr)
-    res.save('res.jpg')
+    res.save(input("Введите название итогового файла: "))
